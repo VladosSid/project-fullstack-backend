@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const { 
-    authMiddleware,
-    credentialsCheckMiddleware,
+    authorizationMiddleware,
+    registerInfoCheckMiddleware,
+    loginInfoCheckMiddleware,
  } = require('../../middleware/authMiddleware');
 const {
     registrationController,
@@ -12,9 +13,9 @@ const {
     checkCurrentUserController,
 } = require('../../controller/authController');
 
-router.post('/signup', credentialsCheckMiddleware, registrationController);
-router.post('/login', credentialsCheckMiddleware, loginController);
-router.get('/current', authMiddleware, checkCurrentUserController);
-router.get('/logout', authMiddleware, logoutController);
+router.post('/signup', registerInfoCheckMiddleware, registrationController);
+router.post('/login', loginInfoCheckMiddleware, loginController);
+router.get('/current', authorizationMiddleware, checkCurrentUserController);
+router.get('/logout', authorizationMiddleware, logoutController);
 
 module.exports = { authRouter: router };

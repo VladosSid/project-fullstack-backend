@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const { HttpError } = require('../../helpers/HttpError');
-const { User } = require('../db/usersModel');
+const { HttpError } = require('../../helpers');
+const { User } = require('../../models/userSchema');
 
 const authorizationMiddleware = async (req, res, next) => {
     // eslint-disable-next-line dot-notation

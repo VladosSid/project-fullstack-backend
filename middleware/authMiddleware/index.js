@@ -1,7 +1,9 @@
 const authorizationMiddleware = require('./authorizationMiddleware');
-const credentialsCheckMiddleware = require('./credentialsCheckMiddleware');
+const registerInfoCheckMiddleware = require('./registerInfoCheckMiddleware');
+const loginInfoCheckMiddleware = require('./loginInfoCheckMiddleware');
 
 module.exports = {
     authorizationMiddleware,
-    credentialsCheckMiddleware
+    registerInfoCheckMiddleware,
+    loginInfoCheckMiddleware
 }
