@@ -9,7 +9,7 @@ const loginController = async (req, res) => {
             code: 200,
             status: "success",
             user: {
-                login: updatedUser.login,
+                username: updatedUser.username,
                 email,
                 avatarURL: updatedUser.avatarURL,
                 token,

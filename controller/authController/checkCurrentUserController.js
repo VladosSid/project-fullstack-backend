@@ -9,7 +9,7 @@ const checkCurrentUserController = async (req, res) => {
             code: 200,
             status: "Success",
             user: {
-                login: user.login,
+                username: user.username,
                 email: user.email,
                 token: user.token,
                 avatarURL: user.avatarURL,
