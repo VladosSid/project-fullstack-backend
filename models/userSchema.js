@@ -29,8 +29,8 @@ const userSchema = new mongoose.Schema({
     },
     // ======= Статус подписки? ========
     subscribed: {
-        type: Boolean,
-        default: false,
+        type: String,
+        default: "",
     }
     // ======= Если доделаю верификацию емейла, пригодятся следующие поля =======
     // verify: {
