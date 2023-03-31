@@ -1,6 +1,7 @@
-const checkCurrentUser = require('../../service/authService');
+const { checkCurrentUser } = require('../../service/authService');
 
 const checkCurrentUserController = async (req, res) => {
+    // нужен миддлвар для проверки и получения айдишки
     try {
         const { _id: userId } = req.user;
         const user = await checkCurrentUser(userId);

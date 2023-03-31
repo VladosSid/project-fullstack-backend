@@ -8,7 +8,7 @@ const logout = async (userId) => {
     )
 
     if (!user) {
-        throw new HttpError(401, "Not Authorized");
+        throw HttpError(401, "Not Authorized");
     }
 
     return user;
