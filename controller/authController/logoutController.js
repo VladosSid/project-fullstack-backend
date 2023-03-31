@@ -1,6 +1,7 @@
-const logout = require('../../service/authService');
+const { logout } = require('../../service/authService');
 
 const logoutController = async (req, res) => {
+    // нужен миддлвар для проверки и получения айдишки
     try {
         const { _id: userId } = req.user;
         await logout(userId);

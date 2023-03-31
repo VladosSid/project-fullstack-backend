@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-    login: {
+    username: {
         type: String,
-        required: [true, 'Login is required'],
+        required: [true, 'Username is required'],
         unique: true,
     },
     email: {
@@ -29,8 +29,8 @@ const userSchema = new mongoose.Schema({
     },
     // ======= Статус подписки? ========
     subscribed: {
-        type: Boolean,
-        default: false,
+        type: String,
+        default: "",
     }
     // ======= Если доделаю верификацию емейла, пригодятся следующие поля =======
     // verify: {

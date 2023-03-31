@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../../models/userSchema');
 const { HttpError } = require('../../helpers');
@@ -6,13 +6,14 @@ require('dotenv').config();
 
 const login = async (email, password) => {
     const user = await User.findOne({email});
+
     if (!user) {
-        throw new HttpError(401, "Email or password is wrong");
+        throw HttpError(401, "Email or password is wrong");
     }
 
     const passwordCheck = await bcrypt.compare(password, user.password);
     if (!passwordCheck) {
-        throw new HttpError(401, "Email or password is wrong");
+        throw HttpError(401, "Email or password is wrong");
     }
 
     const token = jwt.sign({
