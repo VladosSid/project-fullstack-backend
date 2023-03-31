@@ -26,7 +26,7 @@ const authorizationMiddleware = async (req, res, next) => {
         req.user = user;
         next();
     } catch (err) {
-        next(HttpError(401, "Not Authorized"));
+        next(HttpError(401, err.message));
     }
 }
 
