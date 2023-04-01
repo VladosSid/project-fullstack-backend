@@ -20,7 +20,7 @@ const avatarImgParams = {
 const multerAvatar = new CloudinaryStorage({
   cloudinary,
   params: (req, file) => {
-    const imgName = `_user_avatar`;
+    const imgName = `${req.user._id}_user_avatar`;
     return {
       folder: 'avatars',
       allowed_formats: avatarImgParams.acceptableFileTypes,
