@@ -5,10 +5,17 @@ const { User } = require('../../models/userSchema');
 
 const authorizationMiddleware = async (req, res, next) => {
     // eslint-disable-next-line dot-notation
+    if(!req.headers["authorization"]) {
+        next(HttpError(401, "Not Authorized"));
+        return;
+    }
+    
+    // eslint-disable-next-line dot-notation
     const [, token] = req.headers["authorization"].split(" ");
 
     if (!token) {
         next(HttpError(401, "Not Authorized"));
+        return;
     }
 
     try {
