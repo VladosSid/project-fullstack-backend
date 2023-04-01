@@ -4,8 +4,8 @@ const {User} = require("../../models/userSchema")
 const {sendEmail} = require('../../helpers')
 
 const addSubscribe = async (req, res) => {
-const {_id} = res.user;
-const {email} = res.body;
+const {_id} = req.user;
+const {email} = req.body;
 
 const resp = await User.findOne({email});
 
@@ -24,7 +24,11 @@ const verifyEmail = {
   await sendEmail(verifyEmail);
 
 
-  return res.status(200).json('Subscribing success');
+  return res.json({
+    code: 200,
+    status: "Success",
+    message: "Subscribing success"
+    });
 };
 
 module.exports = {

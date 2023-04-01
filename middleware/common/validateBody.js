@@ -5,7 +5,7 @@ const validateBody = (schema) => {
     const { error } = schema.validate(req.body);
     if (error) {
       // next(HttpError(400, error.message));
-      next(HttpError(400, "Помилка від Joi або іншої бібліотеки валідації"));
+      next(HttpError(400, "Invalid email address format"));
     }
     next();
   };
