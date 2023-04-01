@@ -1,13 +1,13 @@
 const express = require('express');
 
-// const { authMiddleware } = require("../../middleware/authMiddleware")
+const { authorizationMiddleware } = require('../../middleware/authMiddleware');
 
-const ctrl = require('../../controller/recipesController');
+const { getCategoryList, getMainPageRecipes } = require('../../controller/recipesController');
 
 const router = express.Router();
 
-// поставить прошарку
-router.get('/category-list', ctrl.getCategoryList);
-//
+router.get('/category-list', authorizationMiddleware, getCategoryList);
+
+router.get('/main-page', authorizationMiddleware, getMainPageRecipes)
 
 module.exports = router;
