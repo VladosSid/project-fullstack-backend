@@ -5,18 +5,18 @@ const {sendEmail} = require('../../helpers')
 
 const addSubscribe = async (req, res) => {
 const {_id} = req.user;
-const {email} = req.body;
+const {email:subscribed} = req.body;
 
-const resp = await User.findOne({email});
+const resp = await User.findOne({subscribed});
 
 if(resp) {
     throw HttpError(409, "This email has already subscribed.")
 }
 
-const {username} = await User.findByIdAndUpdate(_id, {subscribed: email});
+const {username} = await User.findByIdAndUpdate(_id, {subscribed});
 
 const verifyEmail = {
-    to: email,
+    to: subscribed,
     subject: "Subscribing success email",
     html: `<h2> ${username}, Thank You for Subscribing! </h2>`,
   };

@@ -11,9 +11,9 @@ const {addSubscribe} = require('../../controller/subscribeController/subscribe')
 const router = express.Router();
 
 // поставить прошарку
-router.get('/',  addSubscribe);
+router.post('/', authorizationMiddleware, validateBody(subscribeSchema), addSubscribe);
 //
 
 module.exports = router;
 
-//authorizationMiddleware, validateBody(subscribeSchema),,
+
