@@ -17,5 +17,6 @@ router.post('/signup', registerInfoCheckMiddleware, registrationController);
 router.post('/login', loginInfoCheckMiddleware, loginController);
 router.get('/current', authorizationMiddleware, checkCurrentUserController);
 router.get('/logout', authorizationMiddleware, logoutController);
+router.patch('/update')
 
 module.exports = { authRouter: router };
