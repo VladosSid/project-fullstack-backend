@@ -22,12 +22,7 @@ const mainPage = async req => {
     .filter(i => i.category === 'Dessert')
     .slice(0, Number(query));
 
-  return {
-    breakfast,
-    miscellaneous,
-    chicken,
-    dessert,
-  };
+  return [...breakfast, ...miscellaneous, ...chicken, ...dessert];
 };
 
 module.exports = mainPage;
