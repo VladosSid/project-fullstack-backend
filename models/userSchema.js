@@ -61,6 +61,11 @@ const userSchema = new mongoose.Schema({
     // },
     // ==========================================================================
 
+},
+
+{ 
+    versionKey: false, 
+    timestamps: true 
 })
 
 userSchema.pre('save', async function() {
