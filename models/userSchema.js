@@ -22,14 +22,33 @@ const userSchema = new mongoose.Schema({
     avatarURL: {
         type: String,
     },
-    // ======= Массив id рецептов, добавленных в Favorites? =========
+    // ======= Массив id рецептов, добавленных в Favorites =========
     favorites: {
-        type: [String],
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'recipe',   
+        }],
     },
-    // ======= Статус подписки? ========
     subscribed: {
         type: String,
         default: "",
+    },
+    shoppingList: {
+        type: [{
+            // id продукта
+            ingredientId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'ingredient',   
+            },
+            // количество 
+            quantity: {
+                type: Number,
+            },
+            // единица измерения
+            unit: {
+                type: String,
+            }
+        }],
     }
     // ======= Если доделаю верификацию емейла, пригодятся следующие поля =======
     // verify: {
@@ -42,6 +61,11 @@ const userSchema = new mongoose.Schema({
     // },
     // ==========================================================================
 
+},
+
+{ 
+    versionKey: false, 
+    timestamps: true 
 })
 
 userSchema.pre('save', async function() {
