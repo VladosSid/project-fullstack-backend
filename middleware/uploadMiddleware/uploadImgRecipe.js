@@ -9,7 +9,7 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-const recipeImgPerems = {
+const recipeImgParams = {
   dimensions: {
     width: 300,
     height: 323,
@@ -26,12 +26,12 @@ const multerImgRecipe = new CloudinaryStorage({
     const recipeName = `${_id}_${id}_recipe`;
     return {
       folder: 'recipes_photos',
-      allowed_formats: recipeImgPerems.acceptableFileTypes,
+      allowed_formats: recipeImgParams.acceptableFileTypes,
       public_id: recipeName,
       transformation: [
         {
-          height: recipeImgPerems.dimensions.height,
-          width: recipeImgPerems.dimensions.width,
+          height: recipeImgParams.dimensions.height,
+          width: recipeImgParams.dimensions.width,
           crop: 'fill',
         },
       ],

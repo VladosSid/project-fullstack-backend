@@ -8,7 +8,7 @@ const { authRouter } = require('./routes/api/auth');
 const recipesRouter = require('./routes/api/recipes');
 const subscribeRouter = require('./routes/api/subscribe');
 // const searchRouter = require('./routes/api/search');
-
+const ownRecipesRouter = require('./routes/api/ownRecipes');
 
 
 const app = express();
@@ -22,7 +22,10 @@ app.use('/api/subscribe', subscribeRouter);
 
 app.use('/api/users', authRouter);
 app.use('/api/recipes', recipesRouter);
+
 // app.use('/api/search', searchRouter);
+
+app.use('/api/ownRecipes', ownRecipesRouter);
 
 
 app.use((req, res) => {
@@ -30,7 +33,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Server error" } = err;
+  const { status = 500, message = 'Server error' } = err;
   res.status(status).json({ message });
 });
 
