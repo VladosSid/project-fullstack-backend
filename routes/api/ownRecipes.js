@@ -2,16 +2,23 @@ const expres = require('express');
 
 const { authorizationMiddleware } = require('../../middleware/authMiddleware');
 const { uploadImgRecipe } = require('../../middleware/uploadMiddleware');
+const { validateBody } = require('../../middleware/common');
 const {
   addRecipe,
   delRecipe,
   getRecipesByOwn,
 } = require('../../controller/ownRecipesController');
-// const { validateBody } = require('../../middleware/common');
+const { addRecipeSchema } = require('../../helpers/validations/');
 
 const router = expres.Router();
 
-router.post('/', authorizationMiddleware, uploadImgRecipe, addRecipe);
+router.post(
+  '/',
+  authorizationMiddleware,
+  uploadImgRecipe,
+  validateBody(addRecipeSchema),
+  addRecipe
+);
 router.delete('/:id', authorizationMiddleware, delRecipe);
 router.get('/', authorizationMiddleware, getRecipesByOwn);
 
