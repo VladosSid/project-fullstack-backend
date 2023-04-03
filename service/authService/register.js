@@ -7,11 +7,13 @@ const register = async (username, email, password) => {
         throw HttpError(409, "Email in use");
     }
 
+    const TEMP_AVATAR = "https://res.cloudinary.com/dzdi0fyvw/image/upload/v1680523142/avatars/642aabed33c045223f516bd0_user_avatar.png"
+
     const user = new User({
         username,
         email,
         password,
-        avatarURL: "temp"
+        avatarURL: TEMP_AVATAR
     });
     await user.save();  
 }
