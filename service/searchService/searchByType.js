@@ -1,51 +1,54 @@
-const { HttpError } = require("../../helpers")
-// const {Ingredient} = require('../../models/ingredientSchema')
-// const { Recipe } = require("../../models/recipeSchema")
+//якщо приходить 2 слова?
+// доборити пошук
 
-const invokeType = async ({type, query}) => {
+const { HttpError } = require('../../helpers');
+// const { Ingredient } = require('../../models/ingredientSchema');
+const { Recipe } = require('../../models/recipeSchema');
 
+const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
+  function toNormalizedQuery(query) {
+    const normalizeQuery = query.trim();
+    const result = new RegExp('\\b' + normalizeQuery + '\\b', 'i');
+    return result;
+  }
 
-    switch (type) {
-        case "ingredients":
-            // const normalizeQuery = query.trim().toLowerCase().split()
-            // if (normalizeQuery[0]) {
-            //     const ingredient = await Ingredient.findOne({title:normalizeQuery });
-                
+  switch (type) {
+    case 'ingredients':
+      // const normalizedQueryforIngredients = toNormalizedQuery(query);
+      // const ingredientId = await Ingredient.findOne(
+      //   { title: normalizedQueryforIngredients },
+      //   '_id'
+      // );
+      // if (!ingredientId) {
+      //   throw HttpError(404, `Recipe with ingredient: ${query}  not found`);
+      // }
+      // // const normalizeId = ingredientId._id.toString();
+      // // console.log(normalizeId);
+      // const normalizeId = ingredientId._id.toString();
 
-            // }  
-        
+      // const recipesArrByIngredients = await Recipe.find({
+      //   ingredients: { $elemMatch: { id: normalizeId } },
+      // });
 
-            // const ingredient = await Ingredient.findOne({title: });
-            // return ("ingredients")
+      // // const recipesArrByIngredients = await Recipe.findById({
+      // //   ingredients: { id: normalizeId },
+      // // });
 
+      // console.log(recipesArrByIngredients);
 
-            case "title":
-            //     const normalizeQuery = query.trim().toLowerCase()
-            // //     const RegExp = `/${normalizeQuery}/i`
-            // //     // console.log(normalizeQuery.length)
-            // //     // if(normalizeQuery.length === 1) {
-            // //     //     const queryToCapitalize = 
-            // //     // }
-                
-            // //    console.log(RegExp.toString())
-            // const forSearch = `/${normalizeQuery}/`
-            // console.log(forSearch)
+      // return recipesArrByIngredients;
+      return 'ingredients';
 
+    case 'title':
+      const normalizedQueryForTitle = toNormalizedQuery(query);
+      const recipesArrByTitle = await Recipe.find({
+        title: normalizedQueryForTitle,
+      });
+      return recipesArrByTitle;
 
-            //    const result = await Recipe.find({title: { $regex: /beef/, $options: 'i' }})
+    default:
+      throw HttpError(400, 'Invalid type case');
+  }
+};
 
-            //     // const result = await Recipe.find({title: /beef/i})
-            //     //{ $regex: /Ghost/, $options: 'i' }
-            //     // console.log(result)
-            //     //).exists({ title: /beef/i}
-  
-            // // exists({ name: /picard/i })
-            // return (result)
-
-
-        default:
-            throw HttpError(400, "Invalid type case")
-      }
-}
-
-module.exports =  invokeType;
+module.exports = searchByType;

@@ -7,7 +7,7 @@ require('dotenv').config();
 const { authRouter } = require('./routes/api/auth');
 const recipesRouter = require('./routes/api/recipes');
 const subscribeRouter = require('./routes/api/subscribe');
-// const searchRouter = require('./routes/api/search');
+const searchRouter = require('./routes/api/search');
 const ingredientsRouter = require('./routes/api/ingredients');
 const ownRecipesRouter = require('./routes/api/ownRecipes');
 
@@ -22,7 +22,7 @@ app.use('/api/subscribe', subscribeRouter);
 app.use('/api/users', authRouter);
 app.use('/api/recipes', recipesRouter);
 
-// app.use('/api/search', searchRouter);
+app.use('/api/search', searchRouter);
 
 app.use('/api/ingredients', ingredientsRouter);
 
