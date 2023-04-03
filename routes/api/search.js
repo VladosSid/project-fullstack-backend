@@ -1,17 +1,15 @@
 const express = require('express');
 
-const { authorizationMiddleware } = require("../../middleware/authMiddleware")
+const { authorizationMiddleware } = require('../../middleware/authMiddleware');
 
-const {validateBody} = require('../../middleware/common')
+const { validateQuery } = require('../../middleware/searchMiddelware');
 
-const searchSchema = require('../../helpers/validations/subscribeSchema')
-const {getSearchRecipes} = require('../../controller/recipesController')
-
+const { getSearchRecipes } = require('../../controller/searchController');
 
 const router = express.Router();
 
 // поставить прошарку
-router.get('/', authorizationMiddleware,  getSearchRecipes);
+router.get('/', authorizationMiddleware, validateQuery, getSearchRecipes);
 //
 //validateBody()
 
