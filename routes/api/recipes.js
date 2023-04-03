@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { authorizationMiddleware } = require('../../middleware/authMiddleware');
-const { isValidId } = require("../../middleware/common")
+const { isValidId } = require('../../middleware/common');
 
 const {
   getCategoryList,
