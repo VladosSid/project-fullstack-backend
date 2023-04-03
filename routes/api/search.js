@@ -4,16 +4,15 @@ const { authorizationMiddleware } = require("../../middleware/authMiddleware")
 
 const {validateBody} = require('../../middleware/common')
 
-const subscribeSchema = require('../../helpers/validations/subscribeSchema')
-const {addSubscribe} = require('../../controller/subscribeController/subscribe')
+const searchSchema = require('../../helpers/validations/subscribeSchema')
+const {getSearchRecipes} = require('../../controller/recipesController')
 
 
 const router = express.Router();
 
 // поставить прошарку
-router.post('/', authorizationMiddleware, validateBody(subscribeSchema), addSubscribe);
+router.get('/', authorizationMiddleware,  getSearchRecipes);
 //
+//validateBody()
 
 module.exports = router;
-
-

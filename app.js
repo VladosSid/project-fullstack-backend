@@ -7,7 +7,9 @@ require('dotenv').config();
 const { authRouter } = require('./routes/api/auth');
 const recipesRouter = require('./routes/api/recipes');
 const subscribeRouter = require('./routes/api/subscribe');
+// const searchRouter = require('./routes/api/search');
 const ownRecipesRouter = require('./routes/api/ownRecipes');
+
 
 const app = express();
 
@@ -20,7 +22,11 @@ app.use('/api/subscribe', subscribeRouter);
 
 app.use('/api/users', authRouter);
 app.use('/api/recipes', recipesRouter);
+
+// app.use('/api/search', searchRouter);
+
 app.use('/api/ownRecipes', ownRecipesRouter);
+
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
