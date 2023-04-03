@@ -3,12 +3,17 @@ const router = express.Router()
 
 const { 
     authorizationMiddleware,
-    registerInfoCheckMiddleware,
-    loginInfoCheckMiddleware,
  } = require('../../middleware/authMiddleware');
 const {
     uploadAvatar
 } = require('../../middleware/uploadMiddleware');
+const {
+    validateBody
+} = require('../../middleware/common');
+const {
+    registerSchema,
+    loginSchema
+} = require('../../helpers/validations');
 const {
     registrationController,
     loginController,
@@ -17,8 +22,8 @@ const {
     updateUserController
 } = require('../../controller/authController');
 
-router.post('/signup', registerInfoCheckMiddleware, registrationController);
-router.post('/login', loginInfoCheckMiddleware, loginController);
+router.post('/signup', validateBody(registerSchema), registrationController);
+router.post('/login', validateBody(loginSchema), loginController);
 router.get('/current', authorizationMiddleware, checkCurrentUserController);
 router.get('/logout', authorizationMiddleware, logoutController);
 router.patch('/update', authorizationMiddleware, uploadAvatar, updateUserController)
