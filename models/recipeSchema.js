@@ -1,5 +1,19 @@
 const { Schema, model } = require('mongoose');
 
+const recipeIngredientSchema = new Schema(
+  {
+    id: {
+      type: String,
+      required: true,
+    },
+    measure: {
+      type: String,
+      required: true,
+    },
+  },
+  { _id: false }
+);
+
 const recipeSchema = new Schema(
   {
     title: {
@@ -23,7 +37,7 @@ const recipeSchema = new Schema(
       required: true,
     },
     ingredients: {
-      type: Array,
+      type: [recipeIngredientSchema],
       required: true,
     },
     instructions: {
