@@ -3,8 +3,6 @@ const router = express.Router()
 
 const { 
     authorizationMiddleware,
-    // registerInfoCheckMiddleware,
-    // loginInfoCheckMiddleware,
  } = require('../../middleware/authMiddleware');
 const {
     uploadAvatar
