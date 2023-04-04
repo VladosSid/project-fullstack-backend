@@ -9,6 +9,7 @@ const addToFavoriteList = async req => {
     throw HttpError(404, 'User not found');
   }
   const user = await User.findOne({ _id });
+
   if (user.favorites.includes(newFavoriteRecipe)) {
     throw HttpError(400, 'The recipe is already in the list');
   } else {

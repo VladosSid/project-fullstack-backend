@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const recipeIngredientSchema = new Schema(
   {
     id: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
     },
     measure: {

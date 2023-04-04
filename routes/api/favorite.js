@@ -7,16 +7,24 @@ const { validateBody } = require('../../middleware/common');
 const {
   addToFavorite,
   getFromFavorite,
+  removeFromFavorite,
 } = require('../../controller/favoriteController');
-const { addToFavoriteShema } = require('../../helpers/validations/');
+const { favoriteShema } = require('../../helpers/validations/');
 
 router.patch(
-  '/',
+  '/add',
   authorizationMiddleware,
-  validateBody(addToFavoriteShema),
+  validateBody(favoriteShema),
   addToFavorite
 );
 
 router.get('/', authorizationMiddleware, getFromFavorite);
+
+router.patch(
+  '/remove',
+  authorizationMiddleware,
+  validateBody(favoriteShema),
+  removeFromFavorite
+);
 
 module.exports = router;
