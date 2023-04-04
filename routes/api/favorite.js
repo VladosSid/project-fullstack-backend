@@ -4,7 +4,10 @@ const router = express.Router();
 const { authorizationMiddleware } = require('../../middleware/authMiddleware');
 const { validateBody } = require('../../middleware/common');
 
-const { addToFavorite } = require('../../controller/favoriteController');
+const {
+  addToFavorite,
+  getFromFavorite,
+} = require('../../controller/favoriteController');
 const { addToFavoriteShema } = require('../../helpers/validations/');
 
 router.patch(
@@ -13,5 +16,7 @@ router.patch(
   validateBody(addToFavoriteShema),
   addToFavorite
 );
+
+router.get('/', authorizationMiddleware, getFromFavorite);
 
 module.exports = router;
