@@ -1,4 +1,4 @@
-const expres = require('express');
+const express = require('express');
 
 const { authorizationMiddleware } = require('../../middleware/authMiddleware');
 const { uploadImgRecipe } = require('../../middleware/uploadMiddleware');
@@ -10,7 +10,7 @@ const {
 } = require('../../controller/ownRecipesController');
 const { addRecipeSchema } = require('../../helpers/validations/');
 
-const router = expres.Router();
+const router = express.Router();
 
 router.post(
   '/',
