@@ -4,6 +4,8 @@ const querySchema = require('./querySchema');
 const subcsribeSchema = require('./subscribeSchema');
 const addRecipeSchema = require('./addRecipeShema');
 const favoriteShema = require('./favoriteShema');
+const addShoppingShema = require('./addShoppingShema');
+const removeShoppingShema = require('./removeShoppingShema');
 
 module.exports = {
   registerSchema,
@@ -12,4 +14,6 @@ module.exports = {
   subcsribeSchema,
   addRecipeSchema,
   favoriteShema,
+  addShoppingShema,
+  removeShoppingShema,
 };

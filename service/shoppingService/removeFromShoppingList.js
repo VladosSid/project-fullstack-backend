@@ -1,0 +1,37 @@
+const { User } = require('../../models/userSchema');
+const { HttpError } = require('../../helpers');
+
+const removeFromShoppingList = async req => {
+  const { shoppingListIng: removeIngredients } = req.body;
+  const { _id } = req.user;
+
+  if (!_id) {
+    throw HttpError(404, 'User not found');
+  }
+
+  const user = await User.findOne({ _id });
+  console.log(user.shoppingList);
+
+  const isInList = user.shoppingList.find(
+    obj => obj._id.toString() === removeIngredients
+  );
+
+  if (!isInList) {
+    throw HttpError(
+      400,
+      'The ingredient is not listed, so it does not need to be deleted'
+    );
+  } else {
+    const newShoppingList = await User.findByIdAndUpdate(
+      _id,
+      {
+        $pull: { shoppingList: { _id: removeIngredients } },
+      },
+      { new: true }
+    );
+
+    return newShoppingList;
+  }
+};
+
+module.exports = removeFromShoppingList;
