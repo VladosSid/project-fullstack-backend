@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const recipeById = async req => {
   const { id } = req.params;
 
-  // const recipe = await Recipe.find({ _id: id });
   const recipe = await Recipe.aggregate([
     {
       $match: {
