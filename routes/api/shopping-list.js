@@ -7,6 +7,7 @@ const { validateBody } = require('../../middleware/common');
 const {
   addToShopping,
   removeFromShopping,
+  getFromShopping,
 } = require('../../controller/shoppingController');
 const {
   addShoppingShema,
@@ -26,5 +27,7 @@ router.patch(
   validateBody(removeShoppingShema),
   removeFromShopping
 );
+
+router.get('/', authorizationMiddleware, getFromShopping);
 
 module.exports = router;
