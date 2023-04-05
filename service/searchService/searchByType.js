@@ -1,49 +1,57 @@
-//якщо приходить 2 слова?
-// доборити пошук
-
 const { HttpError } = require('../../helpers');
-// const { Ingredient } = require('../../models/ingredientSchema');
+const { Ingredient } = require('../../models/ingredientSchema');
 const { Recipe } = require('../../models/recipeSchema');
 
-const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
-  function toNormalizedQuery(query) {
-    const normalizeQuery = query.trim();
-    const result = new RegExp('\\b' + normalizeQuery + '\\b', 'i');
-    return result;
-  }
+const toNormalizedQuery = query => {
+  const normalizeQuery = query.trim();
+  const result = new RegExp('\\b' + normalizeQuery + '\\b', 'i');
+  return result;
+};
 
+const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
   switch (type) {
     case 'ingredients':
-      // const normalizedQueryforIngredients = toNormalizedQuery(query);
-      // const ingredientId = await Ingredient.findOne(
-      //   { title: normalizedQueryforIngredients },
-      //   '_id'
-      // );
-      // if (!ingredientId) {
-      //   throw HttpError(404, `Recipe with ingredient: ${query}  not found`);
-      // }
-      // // const normalizeId = ingredientId._id.toString();
-      // // console.log(normalizeId);
-      // const normalizeId = ingredientId._id.toString();
+      const normalizedQuery = toNormalizedQuery(query);
 
-      // const recipesArrByIngredients = await Recipe.find({
-      //   ingredients: { $elemMatch: { id: normalizeId } },
-      // });
+      const ingredientId = await Ingredient.findOne(
+        { title: normalizedQuery },
+        '_id'
+      );
 
-      // // const recipesArrByIngredients = await Recipe.findById({
-      // //   ingredients: { id: normalizeId },
-      // // });
+      if (!ingredientId) {
+        throw HttpError(404, `Recipe with ingredient: ${query}  not found`);
+      }
+      const normalizeId = ingredientId._id.toString();
 
-      // console.log(recipesArrByIngredients);
+      const recipesArrByIngredients = await Recipe.find(
+        {
+          'ingredients.id': normalizeId,
+        },
+        '_id title imageUrl ingredients',
+        {
+          skip,
+          limit,
+        }
+      );
 
-      // return recipesArrByIngredients;
-      return 'ingredients';
+      // console.log(recipesArrByIngredients.length);
+
+      return recipesArrByIngredients;
 
     case 'title':
       const normalizedQueryForTitle = toNormalizedQuery(query);
-      const recipesArrByTitle = await Recipe.find({
-        title: normalizedQueryForTitle,
-      });
+
+      const recipesArrByTitle = await Recipe.find(
+        {
+          title: normalizedQueryForTitle,
+        },
+        '_id title imageUrl ',
+        {
+          skip,
+          limit,
+        }
+      );
+      // console.log(recipesArrByTitle.length);
       return recipesArrByTitle;
 
     default:
