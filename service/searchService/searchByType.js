@@ -1,33 +1,27 @@
-//якщо приходить 2 слова?
-// доборити пошук
-
 const { HttpError } = require('../../helpers');
 const { Ingredient } = require('../../models/ingredientSchema');
 const { Recipe } = require('../../models/recipeSchema');
 
-const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
-  function toNormalizedQuery(query) {
-    const normalizeQuery = query.trim();
-    const result = new RegExp('\\b' + normalizeQuery + '\\b', 'i');
-    return result;
-  }
+const toNormalizedQuery = query => {
+  const normalizeQuery = query.trim();
+  const result = new RegExp('\\b' + normalizeQuery + '\\b', 'i');
+  return result;
+};
 
+const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
   switch (type) {
     case 'ingredients':
-      const normalizedQueryforIngredients = toNormalizedQuery(query);
+      const normalizedQuery = toNormalizedQuery(query);
 
       const ingredientId = await Ingredient.findOne(
-        { title: normalizedQueryforIngredients },
+        { title: normalizedQuery },
         '_id'
       );
 
       if (!ingredientId) {
         throw HttpError(404, `Recipe with ingredient: ${query}  not found`);
       }
-      // const normalizeId = ingredientId._id.toString();
-      // console.log(normalizeId);
       const normalizeId = ingredientId._id.toString();
-      console.log(normalizeId);
 
       const recipesArrByIngredients = await Recipe.find(
         {
@@ -39,19 +33,14 @@ const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
           limit,
         }
       );
-      //find({ "ingredients.id": ObjectId("aaa") })
 
-      // const recipesArrByIngredients = await Recipe.findById({
-      //   ingredients: { id: normalizeId },
-      // });
-
-      console.log(recipesArrByIngredients.length);
+      // console.log(recipesArrByIngredients.length);
 
       return recipesArrByIngredients;
-    // return 'ingredients';
 
     case 'title':
       const normalizedQueryForTitle = toNormalizedQuery(query);
+
       const recipesArrByTitle = await Recipe.find(
         {
           title: normalizedQueryForTitle,
@@ -62,6 +51,7 @@ const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
           limit,
         }
       );
+      // console.log(recipesArrByTitle.length);
       return recipesArrByTitle;
 
     default:
