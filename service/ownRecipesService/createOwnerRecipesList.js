@@ -1,19 +1,28 @@
 const { Recipe } = require('../../models/recipeSchema');
-const { HttpError } = require('../../helpers');
+const { HttpError, pagination } = require('../../helpers');
 
 const createOwnerRecipesList = async req => {
   const { _id: owner } = req.user;
-  const validateLimit = 4;
+  const { page = 1 } = req.query;
+  const limit = 4;
+  const skip = pagination(page, limit);
+
+  const totalItem = await Recipe.countDocuments({ owner });
 
   const recipes = await Recipe.find(
     { owner },
     { _id: 1, title: 1, description: 1, imageUrl: 1, time: 1 }
-  ).limit(validateLimit);
+  )
+    .skip(skip)
+    .limit(limit);
 
   if (recipes.length === 0) {
-    throw HttpError(400, 'The recipe list is empty');
+    throw HttpError(400, 'This page of recipe list is empty');
   }
-  return recipes;
+
+  const result = { totalItem, list: recipes };
+
+  return result;
 };
 
 module.exports = createOwnerRecipesList;
