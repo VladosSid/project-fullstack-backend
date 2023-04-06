@@ -20,7 +20,10 @@ const updateUserController = async (req, res) => {
         return res.status(200).json({
             code: 200,
             status: "Success",
-            user
+            user: {
+                username: user.username,
+                avatarURL: user.avatarURL
+            }
         });
 
     } catch (err) {
