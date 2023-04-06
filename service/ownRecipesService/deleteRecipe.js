@@ -9,9 +9,12 @@ const deleteRecipe = async req => {
     owner,
   });
   if (!result) {
-    throw HttpError(404, 'Not found');
-    }
-    return result;
+    throw HttpError(
+      404,
+      'This recipe is not available, so it does not need to be deleted'
+    );
+  }
+  return result;
 };
 
 module.exports = deleteRecipe;
