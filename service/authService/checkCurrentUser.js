@@ -5,7 +5,7 @@ const checkCurrentUser = async (userId) => {
     const user = await User.findById(userId);
 
     if (!user) {
-        throw HttpError(401, "Not Authorized");
+        throw HttpError(404, "User Not Found");
     }
 
     return user;
