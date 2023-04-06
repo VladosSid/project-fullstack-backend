@@ -1,4 +1,5 @@
 const { Recipe } = require('../../models/recipeSchema');
+const { HttpError } = require('../../helpers');
 
 const mainPage = async req => {
   const { query = 1 } = req.query;
@@ -8,6 +9,10 @@ const mainPage = async req => {
     { category: { $in: categories } },
     '_id category title imageUrl'
   );
+
+  if(!recipes){
+    throw HttpError(404, "Categories not found")
+  }
 
   const breakfast = recipes
     .filter(i => i.category === 'Breakfast')
