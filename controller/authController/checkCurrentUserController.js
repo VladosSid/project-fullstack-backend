@@ -12,9 +12,7 @@ const checkCurrentUserController = async (req, res) => {
                 username: user.username,
                 email: user.email,
                 token: user.token,
-                avatarURL: user.avatarURL,
-                favorites: user.favorites
-                // поправим, в зависимости от того, какая информация нужна по этому запросу
+                avatarURL: user.avatarURL
             }
         })
     } catch (err) {
