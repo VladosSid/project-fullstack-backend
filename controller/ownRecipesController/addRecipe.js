@@ -3,8 +3,8 @@ const { createRecipe } = require('../../service/ownRecipesService');
 const addRecipe = async (req, res) => {
   const result = await createRecipe(req);
   res.json({
-    status: 'success',
-    code: 200,
+    status: 'created',
+    code: 201,
     result,
   });
 };
