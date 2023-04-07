@@ -11,7 +11,12 @@
   },
   "servers": [
     {
-      "url": "https://backend-soyummy.onrender.com/api"
+      "url": "https://virtserver.swaggerhub.com/AIBAAKI9/So-Yummy/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://backend-soyummy.onrender.com/api",
+      "description": "SwaggerHub API Auto Mocking"
     }
   ],
   "paths": {
@@ -524,19 +529,6 @@
         ],
         "summary": "Get a shopping list",
         "description": "Get an array of id in response",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "The token issued to the current user.",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -554,7 +546,12 @@
           "404": {
             "description": "Ingredients not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/shopping-list/add": {
@@ -562,23 +559,10 @@
         "tags": [
           "shopping-list"
         ],
-        "summary": "Get a shopping list",
-        "description": "Get an array of id in response",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "The token issued to the current user.",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "summary": "Add ingredients to shopping list",
+        "description": "Add ingredients to shopping list",
         "requestBody": {
-          "description": "Update an existent pet in the store",
+          "description": "An array of ingredients",
           "content": {
             "application/json": {
               "schema": {
@@ -607,7 +591,12 @@
           "401": {
             "description": "Missing header with authorization token."
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/shopping-list/remove": {
@@ -617,21 +606,8 @@
         ],
         "summary": "Remove ingredient",
         "description": "Remove one ingredient from shopping list by id",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "The token issued to the current user.",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "requestBody": {
-          "description": "Update an existent pet in the store",
+          "description": "ingredient id",
           "content": {
             "application/json": {
               "schema": {
@@ -647,7 +623,12 @@
           "401": {
             "description": "Missing header with authorization token."
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/search": {
