@@ -1,0 +1,1758 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "so-yummy-api",
+    "description": "The API for the So Yummy project",
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "SoYummy - Website",
+    "url": "https://vladossid.github.io/project-fullstack-frontend/"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/AIBAAKI9/So-Yummy/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://backend-soyummy.onrender.com/api",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "paths": {
+    "/users/signup": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Create new user",
+        "description": "Register new user",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "New user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrtationSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict - email in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Sign in with an existing user",
+        "description": "Log in",
+        "operationId": "signIn",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LogInUser"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogInSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logs out current logged in user session",
+        "description": "Log out. This can only be done by the logged in user.",
+        "operationId": "logoutUser",
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Get currently logged in user info",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "getUserByName",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogInSuccess"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/users/update": {
+      "patch": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Update user info",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateUser",
+        "requestBody": {
+          "description": "Update an existent user",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/users_update_body"
+              },
+              "encoding": {
+                "img": {
+                  "contentType": "image/png, image/jpeg",
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserUpdated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/recipes/category-list": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Get full category list",
+        "description": "Get all categories in alphabetical order",
+        "responses": {
+          "200": {
+            "description": "Information found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/recipes/main-page": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Get 4 categories with recipes",
+        "description": "Get 4 categories with a certain number of recipes. The number of recipes depends on the \"query\" parameter(1, 2, 4)",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "query must be 1,2 or 4. By default query = 4. This means that there will be four recipies per category",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Information found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeMain"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          },
+          "404": {
+            "description": "Categories not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/recipes/category/{category}": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Get recipes by category",
+        "description": "Get 8 recipes by category name",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "description": "Category name",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "https://backend-soyummy.onrender.com/api/recipes/category/beef"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Information found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipesByCategory"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          },
+          "404": {
+            "description": "Category or recipes not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/recipes/{id}": {
+      "get": {
+        "tags": [
+          "recipes"
+        ],
+        "summary": "Get recipe by Id",
+        "description": "Get full recipe by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Recipe Id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": "https://backend-soyummy.onrender.com/api/recipes/640cd5ac2d9fecf12e8897fc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Information found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          },
+          "404": {
+            "description": "Recipe with id not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/ingredients": {
+      "get": {
+        "tags": [
+          "ingredients"
+        ],
+        "summary": "Get all ingredients",
+        "description": "Full ingredients list with images",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ingredients"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          },
+          "404": {
+            "description": "Ingredients not found."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/popular-recipe": {
+      "get": {
+        "tags": [
+          "popular-recipe"
+        ],
+        "summary": "Get popular recipes",
+        "description": "Get most popular recipes. The number of recipes depends on the \"query\" parameter( 2, 4)",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "query must be 2 or 4. By default query = 4. This means that there will be four recipies.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "https://backend-soyummy.onrender.com/api/popular-recipe?query=2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PopularRecipes"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          },
+          "404": {
+            "description": "Recipes not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shopping-list": {
+      "get": {
+        "tags": [
+          "shopping-list"
+        ],
+        "summary": "Get a shopping list",
+        "description": "Get an array of id in response",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShopList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          },
+          "404": {
+            "description": "Ingredients not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shopping-list/add": {
+      "patch": {
+        "tags": [
+          "shopping-list"
+        ],
+        "summary": "Add ingredients to shopping list",
+        "description": "Add ingredients to shopping list",
+        "requestBody": {
+          "description": "An array of ingredients",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/shoppinglist_add_body"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/shoppinglist_add_body"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/shopping-list/remove": {
+      "patch": {
+        "tags": [
+          "shopping-list"
+        ],
+        "summary": "Remove ingredient",
+        "description": "Remove one ingredient from shopping list by id",
+        "requestBody": {
+          "description": "ingredient id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/shoppinglist_remove_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/search": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Recipe Search",
+        "description": "Search for recipes by keyword in the title, or by ingredient",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "page is an optional parameter, the default is 1. limit - an optional parameter, by default 20. Query - search query. Type - title or ingredients recipies.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "https://backend-soyummy.onrender.com/api/popular-recipe?query=2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipesByCategory"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          },
+          "404": {
+            "description": "Recipes not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/favorite/": {
+      "get": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Get favorite recipes of a currently logged in user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "getFavoriteRecipes",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favorites"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The recipe list is empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/favorite/add": {
+      "patch": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Add recipe to favorites",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "addToFavorites",
+        "requestBody": {
+          "description": "Recipe id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/favorite_add_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favorites"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The recipe is already in the list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/favorite/remove": {
+      "patch": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Remove recipe from favorites",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "removeFromFavorites",
+        "requestBody": {
+          "description": "Recipe id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/favorite_remove_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favorites"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The recipe is not listed, so it does not need to be deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/subscribe": {
+      "post": {
+        "tags": [
+          "subscribe"
+        ],
+        "summary": "Newsletter Subscription",
+        "description": "The user sends their email address to which the newsletter will be sent",
+        "responses": {
+          "200": {
+            "description": "Subscribing success"
+          },
+          "401": {
+            "description": "Missing header with authorization token."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/ownRecipes/": {
+      "get": {
+        "tags": [
+          "ownRecipes"
+        ],
+        "summary": "Get a list of recipes the current user owns",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "getOwnRecipesList",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnRecipes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The recipe list is empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "ownRecipes"
+        ],
+        "summary": "Add new owned recipe",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "addOwnRecipe",
+        "requestBody": {
+          "description": "New recipe info",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnRecipeRequest"
+              },
+              "encoding": {
+                "img": {
+                  "contentType": "image/png, image/jpeg",
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnRecipeCreated"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/ownRecipes/{id}": {
+      "post": {
+        "tags": [
+          "ownRecipes"
+        ],
+        "summary": "Remove owned recipe",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "removeOwnRecipe",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Recipe Id",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "640cd5ac2d9fecf12e8897fc"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "This recipe is not available, so it does not need to be deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          },
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDJlY2YwMjUyNDRiMDE2Yzg5NmUzOWYiLCJpYXQiOjE2ODA3ODkyNTN9.4gCdagpFfd_xJesglWQmP2SrjQwAEdYMtWySpgnHA6s"
+          },
+          "avatarURL": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/dzdi0fyvw/image/upload/v1680523142/avatars/642aabed33c045223f516bd0_user_avatar.png"
+          },
+          "favorites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subscribed": {
+            "type": "string",
+            "example": "oliefr@edfsa.com"
+          },
+          "shoppingList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipeIngredient"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-04-06T21:29:54.640Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-04-06T21:29:54.640Z"
+          }
+        },
+        "xml": {
+          "name": "user"
+        }
+      },
+      "RecipeIngredient": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "measure": {
+            "type": "string",
+            "example": "kg"
+          }
+        },
+        "xml": {
+          "name": "recipeIngredient"
+        }
+      },
+      "RegisterUser": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          }
+        },
+        "xml": {
+          "name": "registerUser"
+        }
+      },
+      "RegistrtationSuccess": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 201
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "user": {
+            "$ref": "#/components/schemas/RegistrtationSuccess_user"
+          }
+        },
+        "xml": {
+          "name": "registrtationSuccess"
+        }
+      },
+      "LogInUser": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          }
+        },
+        "xml": {
+          "name": "LogInUser"
+        }
+      },
+      "LogInSuccess": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "user": {
+            "$ref": "#/components/schemas/LogInSuccess_user"
+          }
+        },
+        "xml": {
+          "name": "logInSuccess"
+        }
+      },
+      "UserUpdated": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserUpdated_user"
+          }
+        },
+        "xml": {
+          "name": "userUpdated"
+        }
+      },
+      "Favorites": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "response": {
+            "$ref": "#/components/schemas/Favorites_response"
+          }
+        },
+        "xml": {
+          "name": "favorites"
+        }
+      },
+      "OwnRecipes": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "response": {
+            "$ref": "#/components/schemas/Favorites_response"
+          }
+        },
+        "xml": {
+          "name": "ownRecipes"
+        }
+      },
+      "OwnRecipeRequest": {
+        "type": "object",
+        "properties": {
+          "img": {
+            "type": "string",
+            "format": "binary"
+          },
+          "title": {
+            "type": "string",
+            "example": "English Breakfast"
+          },
+          "category": {
+            "type": "string",
+            "example": "Chicken"
+          },
+          "description": {
+            "type": "string",
+            "example": "A hearty breakfast meal consisting of eggs, bacon, sausage, baked beans, grilled tomato, and toast. It is a popular breakfast in the United Kingdom."
+          },
+          "time": {
+            "type": "integer",
+            "format": "int64",
+            "example": 40
+          },
+          "instructions": {
+            "type": "string",
+            "example": "Grind the cashew, poppy seeds and cumin seeds into a smooth paste..."
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OwnRecipeRequest_ingredients"
+            }
+          }
+        },
+        "xml": {
+          "name": "ownRecipeRequest"
+        }
+      },
+      "OwnRecipeCreated": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 201
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "result": {
+            "$ref": "#/components/schemas/OwnRecipeCreated_result"
+          }
+        },
+        "xml": {
+          "name": "ownRecipeCreated"
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 404
+          },
+          "status": {
+            "type": "string",
+            "example": "not found"
+          }
+        },
+        "xml": {
+          "name": "error"
+        }
+      },
+      "CategoryList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "Beef, Breakfast, Chicken, Dessert, Goat, Lamb, Miscellaneous, Pasta, Pork, Seafood, Side, Starter, Vegan, Vegetarian"
+            }
+          }
+        }
+      },
+      "RecipeMain": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          },
+          "title": {
+            "type": "string",
+            "example": "English Breakfast"
+          },
+          "category": {
+            "type": "string",
+            "example": "Breakfast"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560624/cnkpymzd18llmlc9pedc.jpg"
+          }
+        }
+      },
+      "RecipesByCategory": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          },
+          "title": {
+            "type": "string",
+            "example": "English Breakfast"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560624/cnkpymzd18llmlc9pedc.jpg"
+          }
+        }
+      },
+      "Ingredients": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e372e"
+          },
+          "title": {
+            "type": "string",
+            "example": "Onions"
+          },
+          "description": {
+            "type": "string",
+            "example": "A bulb vegetable with layers of flesh covered by a paper-like skin, used in cooking for its flavor and texture."
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564854/v68e3x3qklciznrsbjij.png"
+          }
+        }
+      },
+      "PopularRecipes": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          },
+          "title": {
+            "type": "string",
+            "example": "English Breakfast"
+          },
+          "description": {
+            "type": "object",
+            "example": "A hearty breakfast meal consisting of eggs, bacon, sausage, baked beans, grilled tomato, and toast. It is a popular breakfast in the United Kingdom."
+          },
+          "imageUrl": {
+            "type": "object",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560624/cnkpymzd18llmlc9pedc.jpg"
+          }
+        }
+      },
+      "ShopList": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Ingredients"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "measure": {
+                "type": "string",
+                "example": "350g"
+              }
+            }
+          }
+        ]
+      },
+      "Recipe": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e8897fc"
+          },
+          "title": {
+            "type": "string",
+            "example": "Spaghetti Bolognese"
+          },
+          "category": {
+            "type": "string",
+            "example": "Beef"
+          },
+          "instructions": {
+            "type": "string",
+            "example": "Put the onion and oil in a large pan and fry over a fairly high heat for 3-4 mins. Add the garlic and mince and fry until they both brown. Add the mushrooms and herbs, and cook for another couple of mins.\\r\\n\\r\\nStir in the tomatoes, beef stock, tomato ketchup or purée, Worcestershire sauce and seasoning. Bring to the boil, then reduce the heat, cover and simmer, stirring occasionally, for 30 mins.\\r\\n\\r\\nMeanwhile, cook the spaghetti in a large pan of boiling, salted water, according to packet instructions. Drain well, run hot water through it, put it back in the pan and add a dash of olive oil, if you like, then stir in the meat sauce. Serve in hot bowls and hand round Parmesan cheese, for sprinkling on top."
+          },
+          "description": {
+            "type": "string",
+            "example": "An Italian pasta dish made with spaghetti and a meat-based sauce, typically containing beef, tomatoes, onions, garlic, and herbs."
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560401/huqdxgwkvbhsfjqtexsm.jpg"
+          },
+          "time": {
+            "type": "string",
+            "example": "45"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Recipe_ingredients"
+            }
+          }
+        }
+      },
+      "users_update_body": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Pumpkin"
+          },
+          "img": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "shoppinglist_add_body": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e3660"
+          },
+          "measure": {
+            "type": "string",
+            "example": "350g"
+          }
+        }
+      },
+      "shoppinglist_remove_body": {
+        "type": "object",
+        "properties": {
+          "shoppingListIng": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e3660"
+          }
+        }
+      },
+      "favorite_add_body": {
+        "type": "object",
+        "properties": {
+          "recipe": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          }
+        }
+      },
+      "favorite_remove_body": {
+        "type": "object",
+        "properties": {
+          "recipe": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          }
+        }
+      },
+      "RegistrtationSuccess_user": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          }
+        }
+      },
+      "LogInSuccess_user": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "avatarURL": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/dzdi0fyvw/image/upload/v1680523142/avatars/642aabed33c045223f516bd0_user_avatar.png"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDJlY2YwMjUyNDRiMDE2Yzg5NmUzOWYiLCJpYXQiOjE2ODA3ODkyNTN9.4gCdagpFfd_xJesglWQmP2SrjQwAEdYMtWySpgnHA6s"
+          }
+        }
+      },
+      "UserUpdated_user": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "avatarURL": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/dzdi0fyvw/image/upload/v1680523142/avatars/642aabed33c045223f516bd0_user_avatar.png"
+          }
+        }
+      },
+      "Favorites_response_data_list": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          },
+          "title": {
+            "type": "string",
+            "example": "English Breakfast"
+          },
+          "description": {
+            "type": "string",
+            "example": "A hearty breakfast meal consisting of eggs, bacon, sausage, baked beans, grilled tomato, and toast. It is a popular breakfast in the United Kingdom."
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560538/n8iawnix9rkxfywjitzl.jpg"
+          },
+          "time": {
+            "type": "string",
+            "example": "60"
+          }
+        }
+      },
+      "Favorites_response_data": {
+        "type": "object",
+        "properties": {
+          "totalItem": {
+            "type": "integer",
+            "format": "int64",
+            "example": 4
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Favorites_response_data_list"
+            }
+          }
+        }
+      },
+      "Favorites_response": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Favorites_response_data"
+          }
+        }
+      },
+      "OwnRecipeRequest_ingredients": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          },
+          "measure": {
+            "type": "integer",
+            "format": "int64",
+            "example": 15
+          }
+        }
+      },
+      "OwnRecipeCreated_result_ingredients": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          },
+          "measure": {
+            "type": "string",
+            "example": "15"
+          }
+        }
+      },
+      "OwnRecipeCreated_result": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "English Breakfast"
+          },
+          "category": {
+            "type": "string",
+            "example": "Chicken"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560538/n8iawnix9rkxfywjitzl.jpg"
+          },
+          "description": {
+            "type": "string",
+            "example": "A hearty breakfast meal consisting of eggs, bacon, sausage, baked beans, grilled tomato, and toast. It is a popular breakfast in the United Kingdom."
+          },
+          "time": {
+            "type": "string",
+            "example": "40"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OwnRecipeCreated_result_ingredients"
+            }
+          },
+          "instructions": {
+            "type": "string",
+            "example": "Grind the cashew, poppy seeds and cumin seeds into a smooth paste..."
+          },
+          "popularity": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "640cd5ac2d9fecf12e889863"
+            }
+          },
+          "owner": {
+            "type": "string",
+            "example": "640cd5ac2d9fecf12e889863"
+          },
+          "_id": {
+            "type": "string",
+            "example": "320cd5ac2d9fecf12e885432"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-04-06T21:29:54.640Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-04-06T21:29:54.640Z"
+          }
+        }
+      },
+      "Recipe_ingredients": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "640c2dd963a319ea671e372e"
+          },
+          "title": {
+            "type": "string",
+            "example": "Onions"
+          },
+          "description": {
+            "type": "string",
+            "example": "A bulb vegetable with layers of flesh covered by a paper-like skin, used in cooking for its flavor and texture."
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678564854/v68e3x3qklciznrsbjij.png"
+          },
+          "measure": {
+            "type": "string",
+            "example": "350g"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
