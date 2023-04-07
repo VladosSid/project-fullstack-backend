@@ -6,7 +6,9 @@ const updateUserController = async (req, res) => {
 
     if (Object.keys(req.body).length > 0) {
         const { username } = req.body;
-        newData.username = username;
+        if (username) {
+            newData.username = username;
+        }
     }
 
     if (req.file) {
