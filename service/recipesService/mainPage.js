@@ -2,7 +2,7 @@ const { Recipe } = require('../../models/recipeSchema');
 const { HttpError } = require('../../helpers');
 
 const mainPage = async req => {
-  const { query = 1 } = req.query;
+  const { query = 4 } = req.query;
 
   const categories = ['Breakfast', 'Miscellaneous', 'Chicken', 'Dessert'];
   const recipes = await Recipe.find(

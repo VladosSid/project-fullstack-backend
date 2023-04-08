@@ -11,12 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://virtserver.swaggerhub.com/AIBAAKI9/So-Yummy/1.0.0",
-      "description": "SwaggerHub API Auto Mocking"
-    },
-    {
-      "url": "https://backend-soyummy.onrender.com/api",
-      "description": "SwaggerHub API Auto Mocking"
+      "url": "https://backend-soyummy.onrender.com/api"
     }
   ],
   "paths": {
