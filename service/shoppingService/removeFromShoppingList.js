@@ -10,7 +10,6 @@ const removeFromShoppingList = async req => {
   }
 
   const user = await User.findOne({ _id });
-  console.log(user.shoppingList);
 
   const isInList = user.shoppingList.find(
     obj => obj._id.toString() === removeIngredients
@@ -21,17 +20,16 @@ const removeFromShoppingList = async req => {
       400,
       'The ingredient is not listed, so it does not need to be deleted'
     );
-  } else {
-    const newShoppingList = await User.findByIdAndUpdate(
-      _id,
-      {
-        $pull: { shoppingList: { _id: removeIngredients } },
-      },
-      { new: true }
-    );
-
-    return newShoppingList;
   }
+  const newShoppingList = await User.findByIdAndUpdate(
+    _id,
+    {
+      $pull: { shoppingList: { _id: removeIngredients } },
+    },
+    { new: true }
+  );
+
+  return newShoppingList;
 };
 
 module.exports = removeFromShoppingList;
