@@ -1,13 +1,16 @@
 const { addToShoppingList } = require('../../service/shoppingService');
+const {
+  countShoppingList,
+} = require('../../middleware/modalMotivation/modalMotivation');
 
 const addToShopping = async (req, res) => {
-  const newList = await addToShoppingList(req);
+  await addToShoppingList(req);
+  const message = await countShoppingList(req.user);
+  const motivationMessage = message ?? null;
   res.json({
     status: 'success',
     code: 200,
-    result: {
-      data: newList,
-    },
+    motivationMessage,
   });
 };
 
