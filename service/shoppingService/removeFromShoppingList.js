@@ -21,15 +21,13 @@ const removeFromShoppingList = async req => {
       'The ingredient is not listed, so it does not need to be deleted'
     );
   }
-  const newShoppingList = await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     _id,
     {
       $pull: { shoppingList: { _id: removeIngredients } },
     },
     { new: true }
   );
-
-  return newShoppingList;
 };
 
 module.exports = removeFromShoppingList;
