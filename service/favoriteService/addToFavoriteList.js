@@ -1,4 +1,5 @@
 const { User } = require('../../models/userSchema');
+const { Recipe } = require('../../models/recipeSchema');
 const { HttpError } = require('../../helpers');
 
 const addToFavoriteList = async req => {
@@ -10,19 +11,24 @@ const addToFavoriteList = async req => {
   }
   const user = await User.findOne({ _id });
 
+  await Recipe.findByIdAndUpdate(
+    newFavoriteRecipe,
+    {
+      $addToSet: { popularity: _id },
+    },
+    { new: true }
+  );
+
   if (user.favorites.includes(newFavoriteRecipe)) {
     throw HttpError(400, 'The recipe is already in the list');
-  } else {
-    const newFavoriteList = await User.findByIdAndUpdate(
-      _id,
-      {
-        $push: { favorites: newFavoriteRecipe },
-      },
-      { new: true }
-    );
-
-    return newFavoriteList;
   }
+  await User.findByIdAndUpdate(
+    _id,
+    {
+      $push: { favorites: newFavoriteRecipe },
+    },
+    { new: true }
+  );
 };
 
 module.exports = addToFavoriteList;
