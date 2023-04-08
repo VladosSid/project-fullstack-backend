@@ -8,8 +8,8 @@ const loginController = async (req, res) => {
   try {
     const { token, updatedUser } = await login(email, password);
 
-    const result = await countRegisterDays(updatedUser);
-    const motivationMessage = result ?? null;
+    const message = await countRegisterDays(updatedUser);
+    const motivationMessage = message ?? null;
 
     res.status(200).json({
       code: 200,

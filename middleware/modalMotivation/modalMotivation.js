@@ -29,7 +29,6 @@ const countShoppingList = async ({ _id }) => {
     console.log(error);
   }
 };
-// const message = handleMotivation(user.createAt) ?? 'Sucscribing succes';
 
 const countFavouriteRecipes = async ({ _id }, counter = 9) => {
   try {
