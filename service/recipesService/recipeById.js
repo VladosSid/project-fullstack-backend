@@ -44,6 +44,17 @@ const recipeById = async req => {
     {
       $unset: ['ingr_nfo', 'ingredients.id'],
     },
+    {
+      $project: {
+        area: 0,
+        thumb: 0,
+        tags: 0,
+        createdAt: 0,
+        updatedAt: 0,
+        'ingredients.t': 0,
+        popularity: 0
+      },
+    },
   ]);
 
   if (!recipe || recipe.length === 0) {
