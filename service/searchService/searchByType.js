@@ -3,61 +3,84 @@ const { Ingredient } = require('../../models/ingredientSchema');
 const { Recipe } = require('../../models/recipeSchema');
 
 const toNormalizedQuery = query => {
-  const normalizeQuery = query.trim();
-  const result = new RegExp('\\b' + normalizeQuery + '\\b', 'i');
+  const result = new RegExp('\\b' + query + '\\b', 'i');
+  return result;
+};
+
+const getReciresByTitle = async ({ query, skip, limit }) => {
+  const normalizedQueryForTitle = toNormalizedQuery(query);
+
+  const totalItem = await Recipe.countDocuments({
+    title: normalizedQueryForTitle,
+  });
+
+  const recipesArrByTitle = await Recipe.find(
+    {
+      title: normalizedQueryForTitle,
+    },
+    '_id title imageUrl ',
+    {
+      skip,
+      limit,
+    }
+  );
+
+  const result = { totalItem, list: recipesArrByTitle };
+  return result;
+};
+
+const getRecipesByIngredients = async ({ query, skip, limit }) => {
+  const normalizedQuery = toNormalizedQuery({ query, skip, limit });
+
+  const ingredientId = await Ingredient.findOne(
+    { title: normalizedQuery },
+    '_id'
+  );
+
+  if (!ingredientId) {
+    throw HttpError(404, `Recipe with ingredient: ${query}  not found`);
+  }
+  const normalizeId = ingredientId._id.toString();
+
+  const totalItem = await Recipe.countDocuments({
+    'ingredients.id': normalizeId,
+  });
+
+  const recipesArrByIngredients = await Recipe.find(
+    {
+      'ingredients.id': normalizeId,
+    },
+    '_id title imageUrl ingredients',
+    {
+      skip,
+      limit,
+    }
+  );
+
+  const result = { totalItem, list: recipesArrByIngredients };
+
   return result;
 };
 
 const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
   switch (type) {
     case 'ingredients':
-      const normalizedQuery = toNormalizedQuery(query);
-
-      const ingredientId = await Ingredient.findOne(
-        { title: normalizedQuery },
-        '_id'
-      );
-
-      if (!ingredientId) {
-        throw HttpError(404, `Recipe with ingredient: ${query}  not found`);
-      }
-      const normalizeId = ingredientId._id.toString();
-
-      const recipesArrByIngredients = await Recipe.find(
-        {
-          'ingredients.id': normalizeId,
-        },
-        '_id title imageUrl ingredients',
-        {
-          skip,
-          limit,
-        }
-      );
-
-      // console.log(recipesArrByIngredients.length);
+      const recipesArrByIngredients = await getRecipesByIngredients({
+        query,
+        skip,
+        limit,
+      });
 
       return recipesArrByIngredients;
 
     case 'title':
-      const normalizedQueryForTitle = toNormalizedQuery(query);
-
-      const totalItem = await Recipe.countDocuments({
-        title: normalizedQueryForTitle,
+      const recipesArrByTitle = await getReciresByTitle({
+        query,
+        skip,
+        limit,
       });
 
-      const recipesArrByTitle = await Recipe.find(
-        {
-          title: normalizedQueryForTitle,
-        },
-        '_id title imageUrl ',
-        {
-          skip,
-          limit,
-        }
-      );
-      // console.log(recipesArrByTitle.length);
-      const result = { totalItem, list: recipesArrByTitle };
-      return result;
+      return recipesArrByTitle;
 
     default:
       throw HttpError(400, 'Invalid type case');
