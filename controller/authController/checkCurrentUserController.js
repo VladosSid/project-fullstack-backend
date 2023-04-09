@@ -8,12 +8,7 @@ const checkCurrentUserController = async (req, res) => {
         res.status(200).json({
             code: 200,
             status: "Success",
-            user: {
-                username: user.username,
-                email: user.email,
-                token: user.token,
-                avatarURL: user.avatarURL
-            }
+            user
         })
     } catch (err) {
         res.status(err.status).json({
