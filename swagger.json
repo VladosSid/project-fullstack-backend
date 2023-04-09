@@ -883,18 +883,6 @@
         "description": "Search for recipes by keyword in the title, or by ingredient",
         "parameters": [
           {
-            "name": "query",
-            "in": "query",
-            "description": "page is an optional parameter, the default is 1. limit - an optional parameter, by default 20. Query - search query. Type - title or ingredients recipies.",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            },
-            "example": "https://backend-soyummy.onrender.com/api/popular-recipe?query=2"
-          },
-          {
             "name": "Authorization",
             "in": "header",
             "description": "The token issued to the current user.",
@@ -904,6 +892,56 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "example": "page=2"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "recipes per page",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            },
+            "example": "limit=20"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "search query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "query=soup"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "search parameter - title or ingredients",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "type=title"
           }
         ],
         "responses": {
@@ -1221,9 +1259,26 @@
             }
           }
         ],
+        "requestBody": {
+          "description": "Email address",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/subscribe_body"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Subscribing success"
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_5"
+                }
+              }
+            }
           },
           "401": {
             "description": "Missing header with authorization token.",
@@ -1393,6 +1448,17 @@
         "operationId": "removeOwnRecipe",
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "Recipe Id",
@@ -1403,17 +1469,6 @@
               "type": "string"
             },
             "example": "640cd5ac2d9fecf12e8897fc"
-          },
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "The token issued to the current user.",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
           },
           {
             "name": "page",
@@ -1730,12 +1785,7 @@
       "Error": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int64",
-            "example": 404
-          },
-          "status": {
+          "message": {
             "type": "string",
             "example": "not found"
           }
@@ -1975,12 +2025,39 @@
           }
         }
       },
+      "subscribe_body": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "shalala@email.com"
+          }
+        }
+      },
+      "inline_response_200_5": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "example": "Subscribing success"
+          }
+        }
+      },
       "RegistrtationSuccess_user": {
         "type": "object",
         "properties": {
           "username": {
             "type": "string",
-            "example": "theUser"
+            "example": "Pumpkin"
           },
           "email": {
             "type": "string",
