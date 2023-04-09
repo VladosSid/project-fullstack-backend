@@ -1,13 +1,15 @@
 const { User } = require('../../models/userSchema');
 
-const countRegisterDays = async (user, days = 2) => {
+const countRegisterDays = async ({ createdAt }) => {
+  console.log(createdAt);
+
   try {
     const now = new Date();
-    const diff = now.getTime() - user.createdAt.getTime();
+    const diff = now.getTime() - createdAt.getTime();
     const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    if (diffDays % days === 0) {
-      const count = diffDays / days;
+    if (diffDays % 5 === 0 && diffDays != 0) {
+      const count = diffDays / 5;
       return `Wow! You have been using the application for ${count} days!`;
     }
   } catch (error) {
@@ -27,7 +29,6 @@ const countShoppingList = async ({ _id }) => {
     console.log(error);
   }
 };
-// const message = handleMotivation(user.createAt) ?? 'Sucscribing succes';
 
 const countFavouriteRecipes = async ({ _id }, counter = 9) => {
   try {
