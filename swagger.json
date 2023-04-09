@@ -950,7 +950,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RecipesByCategory"
+                  "$ref": "#/components/schemas/SearchResponse"
                 }
               }
             }
@@ -1448,17 +1448,6 @@
         "operationId": "removeOwnRecipe",
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
-            "description": "The token issued to the current user.",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
             "description": "Recipe Id",
@@ -1469,6 +1458,17 @@
               "type": "string"
             },
             "example": "640cd5ac2d9fecf12e8897fc"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "page",
@@ -1824,6 +1824,23 @@
         "properties": {
           "result": {
             "$ref": "#/components/schemas/RecipesByCategory_result"
+          }
+        }
+      },
+      "SearchResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "example": 200
+          },
+          "status": {
+            "type": "string",
+            "example": "success"
+          },
+          "result": {
+            "$ref": "#/components/schemas/SearchResponse_result"
           }
         }
       },
@@ -2235,6 +2252,30 @@
             "items": {
               "$ref": "#/components/schemas/RecipesByCategory_result_data"
             }
+          }
+        }
+      },
+      "SearchResponse_result_data": {
+        "type": "object",
+        "properties": {
+          "totalItem": {
+            "type": "integer",
+            "format": "int64",
+            "example": 4
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecipesByCategory_result_data"
+            }
+          }
+        }
+      },
+      "SearchResponse_result": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SearchResponse_result_data"
           }
         }
       },
