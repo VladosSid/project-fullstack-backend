@@ -52,7 +52,9 @@ const recipeById = async req => {
         createdAt: 0,
         updatedAt: 0,
         'ingredients.t': 0,
-        popularity: 0
+        popularity: 0,
+        category: 0,
+        youtube: 0,
       },
     },
   ]);
