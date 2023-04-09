@@ -1,14 +1,8 @@
-// написати JOI схему для search
-
-const { invalid } = require('joi');
 const { HttpError } = require('../../helpers');
-const { Recipe } = require('../../models/recipeSchema');
-const searchByType = require('../../service/searchService/searchByType');
+const { searchByType } = require('../../service/searchService');
 
 const getSearchRecipes = async (req, res) => {
-  // const {_id: owner} = req.user;
-
-  const { type, query, page = 1, limit = 12 } = req.query;
+  const { type, query, page = 1, limit = 100 } = req.query;
 
   const pageForSearch = Number(page);
   const limitForSearch = Number(limit);
@@ -29,7 +23,6 @@ const getSearchRecipes = async (req, res) => {
 
   const data = await searchByType({ type, query, skip, limitForSearch });
 
-  // const result = await Recipe.find({}, "-createdAt -updatedAt", {skip, limit});
   res.json({
     status: 'success',
     code: 200,

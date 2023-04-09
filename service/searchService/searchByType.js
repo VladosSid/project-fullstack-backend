@@ -41,6 +41,10 @@ const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
     case 'title':
       const normalizedQueryForTitle = toNormalizedQuery(query);
 
+      const totalItem = await Recipe.countDocuments({
+        title: normalizedQueryForTitle,
+      });
+
       const recipesArrByTitle = await Recipe.find(
         {
           title: normalizedQueryForTitle,
@@ -52,7 +56,8 @@ const searchByType = async ({ type, query, skip, limitForSearch: limit }) => {
         }
       );
       // console.log(recipesArrByTitle.length);
-      return recipesArrByTitle;
+      const result = { totalItem, list: recipesArrByTitle };
+      return result;
 
     default:
       throw HttpError(400, 'Invalid type case');

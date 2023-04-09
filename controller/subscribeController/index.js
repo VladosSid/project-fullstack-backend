@@ -1,4 +1,7 @@
-// const subscribeController = require('./subscribe');
-// const subscribeSchema = require('./subscribeSchema.js')
+const { ctrlWrapper } = require('../../helpers');
 
-// module.exports = {subscribeController, subscribeSchema };
+const addSubscribe = require('./subscribe');
+
+module.exports = {
+  addSubscribe: ctrlWrapper(addSubscribe),
+};
