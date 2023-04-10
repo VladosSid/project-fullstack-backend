@@ -30,10 +30,10 @@ const getReciresByTitle = async ({ query, skip, limit }) => {
 };
 
 const getRecipesByIngredients = async ({ query, skip, limit }) => {
-  const normalizedQuery = toNormalizedQuery({ query, skip, limit });
+  const normalizedQueryByIngredients = toNormalizedQuery(query);
 
   const ingredientId = await Ingredient.findOne(
-    { title: normalizedQuery },
+    { title: normalizedQueryByIngredients },
     '_id'
   );
 
