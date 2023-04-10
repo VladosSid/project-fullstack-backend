@@ -8,7 +8,7 @@ const countRegisterDays = async ({ createdAt }) => {
     const diff = now.getTime() - createdAt.getTime();
     const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    if (diffDays % 5 === 0 && diffDays != 0) {
+    if (diffDays % 5 === 0 && diffDays !== 0) {
       const count = diffDays / 5;
       return `Wow! You have been using the application for ${count} days!`;
     }
@@ -40,7 +40,6 @@ const countFavouriteRecipes = async ({ _id }, counter = 9) => {
     }
 
     if (favorites.length % 9 === 0) {
-      const count = favorites.length / counter;
       return 'Wow! You have added 10 recipes to your favorites!';
     }
   } catch (error) {
