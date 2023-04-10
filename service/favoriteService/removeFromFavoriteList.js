@@ -6,7 +6,7 @@ const removeFromFavoriteList = async req => {
   const { recipe: removeRecipe } = req.body;
   const { _id } = req.user;
   const { page = 1 } = req.query;
-  const limit = 2;
+  const limit = 4;
   const skip = pagination(page, limit);
 
   if (!_id) {
