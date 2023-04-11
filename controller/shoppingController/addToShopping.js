@@ -4,9 +4,9 @@ const {
 } = require('../../middleware/modalMotivation/modalMotivation');
 
 const addToShopping = async (req, res) => {
-  await addToShoppingList(req);
-  const message = await countShoppingList(req.user);
-  const motivationMessage = message ?? null;
+  const totalItems = await addToShoppingList(req);
+  const motivationMessage = (await countShoppingList(totalItems)) ?? null;
+
   res.json({
     status: 'success',
     code: 200,

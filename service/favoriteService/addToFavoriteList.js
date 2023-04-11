@@ -22,13 +22,17 @@ const addToFavoriteList = async req => {
   if (user.favorites.includes(newFavoriteRecipe)) {
     throw HttpError(400, 'The recipe is already in the list');
   }
-  await User.findByIdAndUpdate(
+  const newFavorites = await User.findByIdAndUpdate(
     _id,
     {
       $push: { favorites: newFavoriteRecipe },
     },
     { new: true }
   );
+
+  const totalItems = newFavorites.favorites.length;
+  
+  return totalItems;
 };
 
 module.exports = addToFavoriteList;
