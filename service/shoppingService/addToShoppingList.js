@@ -9,13 +9,17 @@ const addToShoppingList = async req => {
     throw HttpError(404, 'User not found');
   }
 
-  await User.findByIdAndUpdate(
+  const newShoppingList = await User.findByIdAndUpdate(
     _id,
     {
       $push: { shoppingList: newIngredients },
     },
     { new: true }
   );
+
+  const totalItems = newShoppingList.shoppingList.length;
+
+  return totalItems;
 };
 
 module.exports = addToShoppingList;

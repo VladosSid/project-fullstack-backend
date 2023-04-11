@@ -4,9 +4,9 @@ const {
 } = require('../../middleware/modalMotivation/modalMotivation');
 
 const addToFavorite = async (req, res) => {
-  const message = await countFavouriteRecipes(req.user);
-  const motivationMessage = message ?? null;
-  await addToFavoriteList(req);
+  const totalItems = await addToFavoriteList(req);
+  const motivationMessage = (await countFavouriteRecipes(totalItems)) ?? null;
+
   res.json({
     status: 'success',
     code: 200,

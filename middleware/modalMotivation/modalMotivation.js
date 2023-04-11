@@ -1,5 +1,3 @@
-const { User } = require('../../models/userSchema');
-
 const countRegisterDays = async ({ createdAt }) => {
   console.log(createdAt);
 
@@ -17,33 +15,19 @@ const countRegisterDays = async ({ createdAt }) => {
   }
 };
 
-const countShoppingList = async ({ _id }) => {
-  try {
-    const { shoppingList } = await User.findById({ _id }, 'shoppingList');
-    console.log(shoppingList.length);
-
-    if (shoppingList.length === 0) {
-      return 'Wow! You have created your first shopping list!';
-    }
-  } catch (error) {
-    console.log(error);
+const countShoppingList = async totalIngred => {
+  if (totalIngred === 1) {
+    return 'Wow! You have created your first shopping list!';
   }
 };
 
-const countFavouriteRecipes = async ({ _id }, counter = 9) => {
-  try {
-    const { favorites } = await User.findById({ _id }, 'favorites');
-    console.log(favorites.length);
+const countFavouriteRecipes = async totalFavorites => {
+  if (totalFavorites === 1) {
+    return 'Wow! You have added the first recipe to your favorites!';
+  }
 
-    if (favorites.length === 0) {
-      return 'Wow! You have added the first recipe to your favorites!';
-    }
-
-    if (favorites.length % 9 === 0) {
-      return 'Wow! You have added 10 recipes to your favorites!';
-    }
-  } catch (error) {
-    console.log(error);
+  if (totalFavorites === 9) {
+    return 'Wow! You have added 10 recipes to your favorites!';
   }
 };
 
