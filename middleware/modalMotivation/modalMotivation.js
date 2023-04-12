@@ -8,7 +8,7 @@ const countRegisterDays = async ({ createdAt }) => {
 
     if (diffDays % 5 === 0 && diffDays !== 0) {
       const count = diffDays / 5;
-      return `Wow! You have been using the application for ${count} days!`;
+      return `You have been using the application for ${count} days!`;
     }
   } catch (error) {
     console.log(error);
@@ -17,17 +17,17 @@ const countRegisterDays = async ({ createdAt }) => {
 
 const countShoppingList = async totalIngred => {
   if (totalIngred === 1) {
-    return 'Wow! You have created your first shopping list!';
+    return 'You have created your first shopping list!';
   }
 };
 
 const countFavouriteRecipes = async totalFavorites => {
   if (totalFavorites === 1) {
-    return 'Wow! You have added the first recipe to your favorites!';
+    return 'You have added the first recipe to your favorites!';
   }
 
   if (totalFavorites === 9) {
-    return 'Wow! You have added 10 recipes to your favorites!';
+    return 'You have added 10 recipes to your favorites!';
   }
 };
 
