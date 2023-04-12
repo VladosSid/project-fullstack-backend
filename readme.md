@@ -1,33 +1,33 @@
-## GoIT Node.js Course Template Homework
+# GoIT Project Full-Stack: So Yummy API
 
-Виконайте форк цього репозиторію для виконання домашніх завдань (2-6)
-Форк створить репозиторій на вашому http://github.com
+Allows interaction with a MongoDB database and collections of users, recipes, and ingredients.
 
-Додайте ментора до колаборації
+## Full documentation:
 
-Для кожної домашньої роботи створюйте свою гілку.
+Via the following link
+https://backend-soyummy.onrender.com/api-docs/
 
-- hw02
-- hw03
-- hw04
-- hw05
-- hw06
+## Commands:
 
-Кожна нова гілка для др повинна робитися з master
+- `npm install` &mdash; installing necessary packages and dependencies
+- `npm start` &mdash; start the server in production mode
+- `npm run start:dev` &mdash; start the server in development mode
+- `npm run lint` &mdash; run a code check with eslint; recommended to run before each PR and fix all linter errors
+- `npm lint:fix` &mdash; run a code check with eslint and automatically fix simple errors
 
-Після того, як ви закінчили виконувати домашнє завдання у своїй гілці, необхідно зробити пулл-реквест (PR). Потім додати ментора для рев'ю коду. Тільки після того, як ментор заапрувить PR, ви можете виконати мердж гілки з домашнім завданням у майстер.
+==========================================================
 
-Уважно читайте коментарі ментора. Виправте зауваження та зробіть коміт у гілці з домашнім завданням. Зміни підтягнуться у PR автоматично після того, як ви відправите коміт з виправленнями на github
-Після виправлення знову додайте ментора на рев'ю коду.
+Дозволяє взаємодіяти із MongoDB базою даних та колекціями користувачів, рецептів та інгредієнтів.
 
-- При здачі домашньої роботи є посилання на PR
-- JS-код чистий та зрозумілий, для форматування використовується Prettier
+## Повна документація:
 
-### Команди:
+За посиланням
+https://backend-soyummy.onrender.com/api-docs/
 
+## Команди:
+
+- `npm install` &mdash; встановлення необхідних пакетів та залежностей
 - `npm start` &mdash; старт сервера в режимі production
 - `npm run start:dev` &mdash; старт сервера в режимі розробки (development)
 - `npm run lint` &mdash; запустити виконання перевірки коду з eslint, необхідно виконувати перед кожним PR та виправляти всі помилки лінтера
 - `npm lint:fix` &mdash; та ж перевірка лінтера, але з автоматичними виправленнями простих помилок
-
-- header multipart/form-data boundary=<calculated when request is send>
