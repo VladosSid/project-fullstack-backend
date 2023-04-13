@@ -15,9 +15,6 @@ const getFavoriteList = async req => {
 
   const totalItem = user.favorites.length;
 
-  if (user.favorites.length === 0) {
-    throw HttpError(400, 'The recipe list is empty');
-  }
   const favoritesList = user.favorites;
 
   const newRecipesArray = await Recipe.find(

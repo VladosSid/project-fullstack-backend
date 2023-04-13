@@ -1,5 +1,5 @@
 const { Recipe } = require('../../models/recipeSchema');
-const { HttpError, pagination } = require('../../helpers');
+const { pagination } = require('../../helpers');
 
 const createOwnerRecipesList = async req => {
   const { _id: owner } = req.user;
@@ -15,10 +15,6 @@ const createOwnerRecipesList = async req => {
   )
     .skip(skip)
     .limit(limit);
-
-  if (recipes.length === 0) {
-    throw HttpError(400, 'This page of recipe list is empty');
-  }
 
   const result = { totalItem, list: recipes };
 
