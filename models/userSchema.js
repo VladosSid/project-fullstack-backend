@@ -35,7 +35,6 @@ const userSchema = new mongoose.Schema(
     avatarURL: {
       type: String,
     },
-    // ======= Массив id рецептов, добавленных в Favorites =========
     favorites: {
       type: [
         {
@@ -52,16 +51,6 @@ const userSchema = new mongoose.Schema(
       type: [recipeIngredientSchema],
       required: true,
     },
-    // ======= Если доделаю верификацию емейла, пригодятся следующие поля =======
-    // verify: {
-    //     type: Boolean,
-    //     default: false,
-    // },
-    // verificationToken: {
-    //     type: String,
-    //     required: [true, 'Verify token is required'],
-    // },
-    // ==========================================================================
   },
 
   {
